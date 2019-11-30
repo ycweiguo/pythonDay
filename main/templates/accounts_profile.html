@@ -1,0 +1,184 @@
+{% extends 'basemain.html' %}
+
+{% block title %}
+个人信息修改
+{% endblock %}
+
+{% block content %}
+<h2>Here!!</h2>
+<div id="app">
+    <table class="table table-hover form-group">
+        <thead>
+            <tr>
+                <th>编号</th>
+                <th>项目</th>
+                <th>值</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>0</td>
+                <td>账户（不可改）</td>
+                <td><span v-text="email" class="form-control"></span></td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>姓名</td>
+                <td><input v-text="name" class="form-control"></input></td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>性别</td>
+                <td><input v-text="sex" class="form-control"></input></td>
+            </tr>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>生日</td>
+                <td><input  type="date" v-text="birthday" class="form-control"></input></td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>工作证号</td>
+                <td><input v-text="job_number" class="form-control"></input></td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>政治面貌</td>
+                <td><input v-text="zhengzhi_mianmao" class="form-control"></input></td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>入党、团时间</td>
+                <td><input  type="date" v-text="zhengzhi_time" class="form-control"></input></td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>职称</td>
+                <td><input v-text="job" class="form-control"></input></td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td>获得职称时间</td>
+                <td><input  type="date" v-text="job_time" class="form-control"></input></td>
+            </tr>
+            <tr>
+                <td>9</td>
+                <td>职务</td>
+                <td><input v-text="job_2" class="form-control"></input></td>
+            </tr>
+            <tr>
+                <td>10</td>
+                <td>身份证号</td>
+                <td><input v-text="id_number" class="form-control"></input></td>
+            </tr>
+            <tr>
+                <td>11</td>
+                <td>学历</td>
+                <td><input v-text="xue_li" class="form-control"></input></td>
+            </tr>
+            <tr>
+                <td>12</td>
+                <td>学校</td>
+                <td><input v-text="school" class="form-control"></input></td>
+            </tr>
+            <tr>
+                <td>13</td>
+                <td>毕业时间</td>
+                <td><input  type="date" v-text="graduate_time" class="form-control"></input></td>
+            </tr>
+            <tr>
+                <td>14</td>
+                <td>入职时间</td>
+                <td><input type="date" v-text="job_join_time" class="form-control"></input></td>
+            </tr>
+            <tr>
+                <td>15</td>
+                <td>部门</td>
+                <td><input v-text="team_belong" class="form-control"></input></td>
+            </tr>
+            <tr>
+                <td>16</td>
+                <td>手机号</td>
+                <td><input v-model="phone" class="form-control"></input></td>
+            </tr>
+
+        </tbody>
+    </table>
+    <button @click="submit" class="btn btn-primary">保持修改</button>
+</div>
+
+{% endblock %}
+
+{% block vuejs %}
+<script type="text/javascript">
+    var vm;
+    vm = new Vue({
+            el: '#app',
+            data: {
+                email: '{{ request.user.email }}',
+                name: '{{ request.user.name }}',
+                sex: '{{ request.user.sex }}',
+                birthday: '{{ request.user.birthday }}',
+                job_number: '{{ request.user.job_number }}',
+
+                zhengzhi_mianmao: '{{ request.user.zhengzhi_mianmao }}',
+                zhengzhi_time: '{{ request.user.zhengzhi_time }}',
+
+                job: '{{ request.user.job }}',
+                job_time: '{{ request.user.job_time }}',
+                job_2: '{{ request.user.job_2 }}',
+                id_number: '{{ request.user.id_number }}',
+
+                xue_li: '{{ request.user.xue_li }}',
+                school: '{{ request.user.school }}',
+                graduate_time: '{{ request.user.graduate_time }}',
+                job_join_time: '{{ request.user.job_join_time }}',
+                team_belong: '{{ request.user.team_belong }}',
+                phone: '{{ request.user.phone }}',
+            },
+            methods: {
+                submit() {
+                    data_to_send = {
+                        name: this.name,
+                        sex: this.sex,
+                        birthday: this.birthday,
+                        job_number: this.job_number,
+
+                        zhengzhi_mianmao: this.zhengzhi_mianmao,
+                        zhengzhi_time: this.zhengzhi_time,
+
+                        job: this.job,
+                        job_time: this.job_time,
+                        job_2: this.job_2,
+                        id_number: this.id_number,
+
+                        xue_li: this.xue_li,
+                        school: this.school,
+                        graduate_time: this.graduate_time,
+                        job_join_time: this.job_join_time,
+                        team_belong: this.team_belong,
+                        phone: this.phone,
+                    };
+                    console.log(data_to_send);
+                    data_to_send = JSON.stringify(data_to_send);
+                    console.log(data_to_send);
+
+                    $.post('/accounts/profile/',
+                            data_to_send,
+                            function (err) {
+                            if(err === 'success'){
+                                alert('修改已保存！')
+                                return location.assign('/');
+                            }else{
+                                return console.log(err);
+                            }
+                            }
+
+                    );
+                },
+            },
+        }
+    );
+</script>
+{% endblock %}

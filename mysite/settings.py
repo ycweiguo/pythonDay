@@ -27,7 +27,7 @@ SECRET_KEY = 'rsol$t)g1(l35+*^dk8iq27x!^dpbmrq84_)^1nf9=tw61!z@&'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.10.53']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
